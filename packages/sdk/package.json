@@ -1,0 +1,14 @@
+{
+  "name": "@mixwithai/music-client",
+  "version": "0.1.0-beta.3",
+  "description": "Server-side JavaScript client with TypeScript definitions for the public MWA music generation API.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": ["music", "music-generation", "mixwithai", "api-client", "typescript"],
+  "publishConfig": { "access": "public", "tag": "beta" },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": { ".": { "types": "./index.d.ts", "import": "./index.js" } },
+  "files": ["index.js", "index.d.ts", "README.md", "LICENSE"],
+  "engines": { "node": ">=22.16.0" }
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Read an Ableton snapshot, shape a local project draft, and prepare reviewed musical context for the MWA API.">
+  <title>Project workspace · MWA Music Starter</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/project.css">
+  <script type="module" src="/project.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#project-workspace">Skip to project workspace</a>
+  <header class="site-header wrap">
+    <a class="brand" href="/"><span class="brand-mark">mwa<span>↗</span></span><span class="brand-divider"></span><span class="brand-name">PROJECT WORKSPACE</span></a>
+    <nav aria-label="Main navigation"><a href="/">Music playground</a><a href="/docs/ableton-projects.md">Integration guide ↗</a></nav>
+  </header>
+  <main class="wrap project-page">
+    <section class="project-intro" aria-labelledby="project-heading">
+      <div><p class="eyebrow">YOUR SESSION / YOUR NEXT IDEA</p><h1 id="project-heading">Bring a project.<br><span class="muted-heading">Build from its context.</span></h1></div>
+      <p>Read a session, shape a draft, and choose what MWA receives. This original example is a project planner; it does not reproduce the MWA Studio engine.</p>
+    </section>
+    <p id="project-status" class="project-status" role="status" aria-live="polite">Loading the original demo draft…</p>
+    <section id="project-workspace" class="project-workspace" aria-label="Local project draft editor">
+      <aside class="project-sources" aria-labelledby="sources-heading">
+        <p class="eyebrow">01 / SOURCE</p><h2 id="sources-heading">Start with a session</h2>
+        <button id="load-demo" class="button button-outline" type="button">Original demo draft</button>
+        <button id="capture-ableton" class="button button-dark" type="button" disabled>Read Ableton snapshot</button>
+        <p id="reader-note" class="project-help">For local reading, follow the integration guide and run <code>npm run ableton</code>.</p>
+        <label for="project-file">Import public draft JSON</label><input id="project-file" type="file" accept="application/json,.json">
+        <p class="project-help">Only this example's public draft format. Raw .als files, audio and private MWA schemas are not imported.</p>
+        <label for="mwa-generation">This starter's generations</label><select id="mwa-generation"><option value="">Choose a track</option></select>
+        <button id="load-generation" class="button button-outline" type="button" disabled>View audio project draft</button>
+        <a id="open-mwa-studio" class="button button-outline" href="https://mixwithai.com" target="_blank" rel="noopener noreferrer" hidden>Edit original in MWA Studio ↗</a>
+        <audio id="project-audio" controls preload="none" aria-label="Generated full-track audio" hidden></audio>
+        <p id="generation-note" class="project-help" hidden>This draft represents the full-track audio, not the private multitrack project. Its source project can be edited in MWA Studio.</p>
+      </aside>
+      <div class="project-editor">
+        <div class="project-toolbar"><span id="project-source" class="mode-badge">DEMO / LOCAL DRAFT</span><button id="download-project" type="button" class="button button-small button-outline">Export draft JSON</button></div>
+        <form id="project-settings" class="project-settings"><div><label for="project-title">Draft title</label><input id="project-title" maxlength="120" required></div><div><label for="project-tempo">Source tempo / BPM</label><input id="project-tempo" type="number" min="40" max="220" step="0.01" required></div></form>
+        <p class="project-help project-boundary">Edits change this local draft only. They do not change Ableton, the MWA source project or audio playback. Export to keep a draft; reloading resets it.</p>
+        <div class="project-arrangement"><div class="panel-heading"><h2>Arrangement overview</h2><span class="small-mono">Beats · zero-based</span></div><div id="project-timeline" class="project-timeline"></div></div>
+        <div class="project-track-editor">
+          <form id="track-settings">
+            <h2>Shape the draft</h2><label for="edit-track">Track to edit</label><select id="edit-track"></select>
+            <label for="track-name">Track name</label><input id="track-name" maxlength="120" required>
+            <div class="project-control-row"><label class="project-check"><input id="track-muted" type="checkbox">Muted in draft</label><label class="project-check"><input id="track-selected" type="checkbox">Include in context</label></div>
+            <div class="project-control-row"><div><label for="track-volume">Volume / normalized 0–1</label><input id="track-volume" type="number" min="0" max="1" step="0.01"></div><div><label for="track-pan">Pan / −1 to +1</label><input id="track-pan" type="number" min="-1" max="1" step="0.01"></div></div>
+            <p id="track-devices" class="project-help"></p>
+          </form>
+          <form id="clip-settings">
+            <h2>Arrange a clip</h2><label for="edit-clip">Clip to edit</label><select id="edit-clip"></select>
+            <label for="clip-name">Clip name</label><input id="clip-name" maxlength="120" required>
+            <div class="project-control-row"><div><label for="clip-start">Start / beats</label><input id="clip-start" type="number" min="0" max="1000000" step="0.01" required></div><div><label for="clip-length">Length / beats</label><input id="clip-length" type="number" min="0.001" max="1000000" step="0.001" required></div></div>
+            <p id="clip-note" class="project-help">Timing metadata only. No audio files, MIDI note editing, device processing or Live write-back.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+    <section class="project-handoff" aria-labelledby="handoff-heading">
+      <div><p class="eyebrow">02 / REVIEW → MWA</p><h2 id="handoff-heading">Choose what becomes the next idea.</h2><p>Selected draft tracks become a descriptive summary for a new MWA generation. The current API does not import this project or preserve its tempo, clips or mixer settings. It generates 180 seconds at 128 BPM.</p><a id="project-api-access" href="https://mixwithai.com/settings/api" target="_blank" rel="noopener noreferrer">Get MWA API access ↗</a></div>
+      <form id="handoff-form">
+        <label for="project-intent">What should MWA create?</label><textarea id="project-intent" maxlength="500" rows="3" required>Create a new deep house track inspired by this arrangement, with a warmer breakdown and a more energetic final section.</textarea>
+        <label class="project-check"><input id="include-names" type="checkbox">Include selected labels in the context preview</label>
+        <p class="project-help">Labels are omitted by default. If enabled, only the first eight track names enter the generation prompt. No audio, local paths, plugin presets or MIDI note content is sent.</p>
+        <button id="prepare-context" class="button button-dark" type="submit">Review cleaned context</button>
+        <div id="context-review" hidden><h3>Public context preview</h3><pre id="context-json" tabindex="0" aria-label="Cleaned selected project context"></pre><h3>Exact generation prompt</h3><pre id="context-prompt" tabindex="0"></pre><p class="project-help">Preparing this preview makes no hosted MWA request. Continue to the playground, choose a genre, then explicitly generate. Live generation uses API credits.</p><a id="continue-generation" class="button button-dark" href="/">Continue to MWA playground ↗</a></div>
+      </form>
+    </section>
+    <section id="ableton-import" class="project-handoff" aria-labelledby="audio-import-heading">
+      <div><p class="eyebrow">03 / RESULT → LIVE</p><h2 id="audio-import-heading">Bring the result back to Ableton.</h2><p>Import the ready full-track MWA audio into a dedicated empty audio track in a saved, stopped Live Set. This does not apply draft edits, rebuild a multitrack arrangement or change tempo, devices or existing music.</p><p id="import-enable-note" class="project-help">Import is disabled by default.</p><a href="/docs/ableton-audio-import.md">Setup and import limits ↗</a></div>
+      <div>
+        <p id="ableton-import-status" class="project-help" role="status" aria-live="polite">Load a ready live MWA generation above to begin.</p>
+        <button id="inspect-import-targets" class="button button-outline" type="button" disabled>Read eligible Live targets</button>
+        <p id="import-set" class="project-help">No saved Set inspected.</p>
+        <label for="import-track">Dedicated empty audio track</label><select id="import-track" disabled></select>
+        <label for="import-position">Arrangement position / beats, zero-based</label><input id="import-position" type="number" min="0" max="1000000" step="0.01" value="0" required disabled>
+        <button id="prepare-audio-import" class="button button-dark" type="button" disabled>Prepare audio and target preview</button>
+        <div id="audio-import-preview" hidden><pre id="audio-import-details" tabindex="0" aria-label="Prepared audio import details"></pre><label class="project-check"><input id="confirm-audio-import" type="checkbox" disabled>I reviewed this saved Set, empty track and placement. Import this full audio result once.</label><button id="apply-audio-import" class="button button-dark" type="button" disabled>Apply reviewed audio to Ableton</button></div>
+        <div class="share-actions"><button id="refresh-audio-import" class="button button-outline" type="button" disabled>Check import status</button><button id="clear-import-notice" class="button button-outline" type="button" hidden>I inspected Live; clear pending notice</button></div>
+      </div>
+    </section>
+    <p class="project-footer">The optional adapter is original public code using upstream AbletonJS. MWA's app, bridge and processing workflows stay outside this repository. <a href="/docs/ableton-projects.md">Scope and next API phase ↗</a></p>
+  </main>
+</body>
+</html>

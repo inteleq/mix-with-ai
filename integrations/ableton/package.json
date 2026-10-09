@@ -1,0 +1,10 @@
+{
+  "name": "mwa-starter-ableton-reader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Optional public Ableton snapshot and reviewed audio import example. No private MWA bridge code.",
+  "license": "MIT",
+  "engines": { "node": ">=22.16.0" },
+  "dependencies": { "ableton-js": "3.7.3" }
+}

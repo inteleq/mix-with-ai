@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f2e9">
+  <meta name="description" content="Make music. Build something with it. An open-source starter for music apps powered by the MWA API.">
+  <meta property="og:title" content="MWA Music Starter — Make music. Build something with it.">
+  <meta property="og:description" content="A working music app, a typed API client, and room for your next idea. Open source. Powered by MWA.">
+  <title>MWA Music Starter — Make music. Build something with it.</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#studio">Skip to music studio</a>
+  <header class="site-header wrap">
+    <a class="brand" href="/" aria-label="MWA Music Starter home"><span class="brand-mark" aria-hidden="true">mwa<span>↗</span></span><span class="brand-divider"></span><span class="brand-name">MUSIC STARTER</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#track-showcase">Showcase</a>
+      <a href="#compare">Compare</a>
+      <a href="/project">Project workspace</a>
+      <a href="#build">For developers</a>
+      <a class="nav-docs" href="/docs/api.md" target="_blank">API guide <span aria-hidden="true">↗</span></a>
+      <a id="github-link" class="button button-small button-outline" href="#build" hidden><span aria-hidden="true">☆</span> Star on GitHub</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span> OPEN SOURCE. OPEN POSSIBILITIES.</p>
+        <h1 id="hero-title">Make music.<br><span class="muted-heading">Build something with it.</span></h1>
+      </div>
+      <div class="hero-aside">
+        <p>Your first track. Your next music app.<br>Start here, then make it your own.</p>
+        <a id="mwa-link" href="https://mixwithai.com" target="_blank" rel="noopener noreferrer">Powered by MixWithAI <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section id="track-showcase" class="showcase-section" aria-labelledby="showcase-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / THE SHOWCASE</p><h2 id="showcase-title">An idea you can hear.</h2></div><p id="showcase-description">A curated collection of MWA tracks and the public prompts behind them.</p></div>
+      <div id="track-showcase-list" class="track-showcase-list"></div>
+      <div id="showcase-empty" class="showcase-empty"><span class="collection-mark" aria-hidden="true">↗</span><div><h3>The collection is being curated.</h3><p>Try your own idea in the playground, or explore the clearly labeled A/B demo below.</p></div><a href="#studio" class="button button-small button-outline">Try the playground ↗</a></div>
+    </section>
+
+    <section id="studio" class="studio" aria-label="Music creation studio">
+      <div class="studio-topline">
+        <span class="eyebrow">02 / THE PLAYGROUND</span>
+        <span id="mode-badge" class="mode-badge">Connecting…</span>
+      </div>
+      <div class="studio-grid">
+        <div class="composer">
+          <div class="panel-heading"><h2>What does your idea sound like?</h2><span class="small-mono">128 BPM</span></div>
+          <form id="generation-form">
+            <label for="prompt">Describe your track</label>
+            <textarea id="prompt" name="prompt" rows="5" maxlength="1500" aria-describedby="prompt-hint" required>A late-night tech house track with a rolling bassline, crisp percussion, a spacious breakdown, and a punchy final drop. Instrumental.</textarea>
+            <div id="prompt-hint" class="field-hint">Set the mood, instruments, and energy. <span id="prompt-count">0 / 1500 bytes</span></div>
+            <div class="prompt-ideas" aria-label="Prompt ideas">
+              <button type="button" data-preset="night">Late-night drive <span aria-hidden="true">↗</span></button>
+              <button type="button" data-preset="warm">Golden hour <span aria-hidden="true">↗</span></button>
+              <button type="button" data-preset="peak">Peak time <span aria-hidden="true">↗</span></button>
+            </div>
+            <div class="form-row">
+              <div><label for="title">Track title <span class="optional">optional</span></label><input id="title" name="title" maxlength="120" placeholder="After hours"></div>
+              <div><label for="genre">Genre</label><select id="genre" name="genre">
+                <option value="tech_house">Tech house</option><option value="house">House</option><option value="deep_house">Deep house</option><option value="melodic_house">Melodic house</option><option value="afro_house">Afro house</option><option value="progressive_house">Progressive house</option><option value="bass_house">Bass house</option><option value="techno">Techno</option><option value="trance">Trance</option>
+              </select></div>
+            </div>
+            <div id="revision-notice" class="notice" hidden><span id="revision-text"></span><button type="button" id="clear-revision">New track instead</button></div>
+            <button id="generate" type="submit" class="button button-primary" disabled><span id="generate-label">Loading studio…</span><span aria-hidden="true">↗</span></button>
+            <p id="mode-explanation" class="mode-explanation">Checking the starter connection.</p>
+            <div id="error-panel" class="error-panel" role="alert" hidden><p id="error-message"></p><button type="button" id="retry-submit" class="text-button" hidden>Retry the same request</button></div>
+          </form>
+          <details id="setup-details" class="setup-details"><summary>Your first MWA track · guided setup</summary>
+            <ol class="setup-steps">
+              <li><strong>Explore the preview.</strong><span>Listen, compare versions, and try the workflow without a key.</span><small id="setup-preview-status">Waiting for the starter.</small></li>
+              <li><strong>Connect your server.</strong><span>Get an active API key and credits. Run the setup wizard in your local copy; choose Live and provide a protected key file.</span><small id="setup-key-status">Your API key stays on your server.</small></li>
+              <li><strong>Create your first track.</strong><span>Restart the starter, describe your music, and generate. Generation uses MWA API credits.</span><small id="setup-track-status">Live audio will confirm this step.</small></li>
+            </ol>
+            <pre id="setup-command">npm run setup
+npm start</pre><button type="button" id="copy-setup" class="button button-small button-outline">Copy setup commands</button>
+            <a class="api-access setup-access" href="https://mixwithai.com/settings/api" target="_blank" rel="noopener noreferrer">Get API access <span aria-hidden="true">↗</span></a>
+            <p><a href="/docs/setup-and-sharing.md">Setup and sharing guide ↗</a></p><p id="setup-feedback" role="status" aria-live="polite"></p>
+          </details>
+        </div>
+
+        <div class="listening-room">
+          <div class="record-art"><img src="/assets/cover.svg" alt="Abstract green sound waves on a black record sleeve" width="640" height="400"><span class="art-tag">MWA / SOUND IN PROGRESS</span><span id="art-number" class="art-number" aria-hidden="true">001</span></div>
+          <div class="player-heading"><div><p class="eyebrow" id="track-caption">YOUR NEXT IDEA</p><h3 id="track-title">Something worth playing.</h3></div><button type="button" id="play-button" class="play-button" aria-label="Play track" disabled><span aria-hidden="true">▶</span></button></div>
+          <p id="track-description" class="track-description">Describe a track on the left. Your audio will appear here.</p>
+          <div class="progress-region" id="progress-region" hidden><label for="generation-progress" id="stage-label">Preparing</label><progress id="generation-progress" max="1" value="0"></progress><span id="progress-label">0%</span></div>
+          <audio id="audio-player" controls preload="none" hidden aria-label="Generated track player"></audio>
+          <div class="result-actions" id="result-actions" hidden>
+            <a id="audio-download" class="button button-small button-cream" target="_blank" rel="noopener noreferrer" download>Get audio <span aria-hidden="true">↓</span></a>
+            <button type="button" id="variation" class="button button-small button-dark-outline">Make a variation</button>
+            <button type="button" id="remix" class="button button-small button-dark-outline">Remix</button>
+            <button type="button" id="compare-current" class="button button-small button-dark-outline">Compare A/B</button>
+            <button type="button" id="share-card" class="button button-small button-dark-outline">Create share card</button>
+          </div>
+          <div class="secondary-actions"><a id="project-download" target="_blank" rel="noopener noreferrer" hidden>Project JSON ↗</a><a id="studio-link" target="_blank" rel="noopener noreferrer" hidden>Open in MWA ↗</a><a id="project-workspace-link" hidden>View audio draft ↗</a><button type="button" id="refresh-status" hidden>Refresh links</button><button type="button" id="cancel" hidden>Cancel generation</button><button type="button" id="retry-export" hidden>Retry audio export</button></div>
+          <p id="result-note" class="result-note"></p>
+          <p id="status-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
+      </div>
+      <div class="session-strip"><span class="eyebrow">THIS SESSION</span><div id="history"><span class="empty-history">Every great session starts with one idea.</span></div></div>
+    </section>
+
+    <section id="compare" class="comparison-section" aria-labelledby="comparison-title">
+      <div class="section-heading"><div><p class="eyebrow">03 / THE A/B ROOM</p><h2 id="comparison-title">Which version feels right?</h2></div><p>Switch between two tracks at the same listening position. Start with the demo, then compare your own MWA generations.</p></div>
+      <div class="comparison-panel">
+        <div class="comparison-choices"><div class="comparison-slot"><label for="compare-a"><span class="slot-letter">A</span> Original / first track</label><select id="compare-a" aria-describedby="compare-a-details"></select><p id="compare-a-details"></p></div><div class="comparison-slot"><label for="compare-b"><span class="slot-letter">B</span> Variation / second track</label><select id="compare-b" aria-describedby="compare-b-details"></select><p id="compare-b-details"></p></div></div>
+        <div class="comparison-transport"><div class="comparison-switch" role="group" aria-label="Listen to comparison track"><button type="button" id="listen-a" class="button button-small" aria-pressed="true">Listen A</button><button type="button" id="listen-b" class="button button-small" aria-pressed="false">Listen B</button></div><audio id="comparison-audio" controls preload="metadata" aria-label="A/B comparison player"></audio></div>
+        <p id="comparison-note" class="comparison-note" role="status" aria-live="polite" aria-atomic="true">Loading the comparison demo…</p>
+      </div>
+      <a class="comparison-recipe" href="/docs/comparison.md">Build your own comparison experience ↗</a>
+    </section>
+
+    <section id="build" class="developer-section" aria-labelledby="build-title">
+      <div class="developer-copy"><p class="eyebrow">04 / MAKE IT YOURS</p><h2 id="build-title">Your idea.<br>Already in code.</h2><p>The examples follow your prompt, genre, title, and revision choice above. Copy a request, connect your key on your server, and build your own music experience.</p><div class="developer-ctas"><a id="source-link" class="button button-dark" href="/README.md">Get the starter <span aria-hidden="true">↗</span></a><a class="api-access text-link" href="https://mixwithai.com/settings/api" target="_blank" rel="noopener noreferrer">Get an API key ↗</a></div><div class="developer-facts"><span>JavaScript · Python · cURL</span><span>No runtime dependencies</span><span>MIT licensed</span></div></div>
+      <div class="code-card"><div class="code-header"><span id="code-filename">your-next-idea.mjs</span><button id="copy-code" type="button">Copy code</button></div><fieldset class="code-tabs"><legend class="sr-only">Example language</legend><label><input type="radio" name="code-language" value="javascript" checked><span>JavaScript</span></label><label><input type="radio" name="code-language" value="python"><span>Python</span></label><label><input type="radio" name="code-language" value="curl"><span>cURL</span></label><label><input type="radio" name="code-language" value="json"><span>Request JSON</span></label></fieldset><pre><code id="code-example"></code></pre><p id="code-note" class="code-note">Display only. Running a generation example uses your API credits. Keep the input and request key together for retries.</p><div class="code-footer"><span class="signal-dot" aria-hidden="true"></span> Keys stay on your server · no API call when editing</div></div>
+    </section>
+    <section class="ideas-grid" aria-label="Things you could build">
+      <article><span class="idea-number">01</span><h3>A music creation app</h3><p>Give your community a place to turn prompts into tracks.</p><a href="/docs/build-with-mwa.md">Explore the recipe ↗</a></article>
+      <article><span class="idea-number">02</span><h3>A soundtrack workflow</h3><p>Generate options, audition them, and save a soundtrack for a project.</p><a href="/docs/build-with-mwa.md">Explore the recipe ↗</a></article>
+      <article><span class="idea-number">03</span><h3>A version playground</h3><p>Build an interface for comparing variations and remix ideas.</p><a href="/docs/build-with-mwa.md">Explore the recipe ↗</a></article>
+    </section>
+    <section class="closing-note"><p>Built something with MWA? <strong>We’d love to hear it.</strong></p><a id="showcase-link" href="https://mixwithai.com" target="_blank" rel="noopener noreferrer">Explore MixWithAI ↗</a></section>
+  </main>
+  <dialog id="share-dialog" class="share-dialog" aria-labelledby="share-title" aria-describedby="share-description">
+    <div class="share-heading"><div><p class="eyebrow">YOUR MUSIC / YOUR NEXT IDEA</p><h2 id="share-title">Give your track a cover.</h2></div><form method="dialog"><button class="button button-small button-outline" aria-label="Close share card">Close</button></form></div>
+    <p id="share-description">Create a card on your device. Review it before sharing; audio and download links stay out of the card.</p>
+    <label for="share-track-title">Card title</label><input id="share-track-title" maxlength="120">
+    <label class="share-prompt-option"><input type="checkbox" id="share-include-prompt"> Include my prompt on the card and in the caption</label>
+    <canvas id="share-canvas" width="1200" height="630" role="img" aria-label="Preview of your downloadable track card"></canvas>
+    <label for="share-caption">Caption · review before copying</label><textarea id="share-caption" rows="4" readonly></textarea>
+    <div class="share-actions"><button id="download-share-card" type="button" class="button button-dark">Download PNG ↓</button><button id="copy-share-caption" type="button" class="button button-outline">Copy caption</button></div>
+    <p id="share-feedback" class="share-feedback" role="status" aria-live="polite">Nothing is uploaded or posted automatically.</p>
+  </dialog>
+  <footer class="wrap site-footer"><a class="brand-mark" href="https://mixwithai.com" target="_blank" rel="noopener noreferrer" aria-label="MixWithAI">mwa<span aria-hidden="true">↗</span></a><p>An open-source starter powered by the MWA API.</p><a href="/README.md">Read the README ↗</a></footer>
+  <noscript><p class="wrap">Enable JavaScript to use the music playground. The README and API guide work without it.</p></noscript>
+</body>
+</html>
