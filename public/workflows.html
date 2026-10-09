@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose a ready-made MWA music workflow, make it yours, and explore the listening and reviewed Ableton import journey.">
+  <title>Music workflows · MixWithAI</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/workflows.css">
+  <script type="module" src="/workflows.js"></script>
+</head>
+<body class="workflow-body">
+  <a class="skip-link" href="#workflow-cards">Skip to workflows</a>
+  <header class="site-header wrap">
+    <a class="brand" href="/workflows" aria-label="MixWithAI workflows"><span class="brand-mark" aria-hidden="true">mwa<span>↗</span></span><span class="brand-divider"></span><span class="brand-name">MUSIC WORKFLOWS</span></a>
+    <nav aria-label="Main navigation"><a href="#ready">Setup</a><a href="/">Developer playground</a><a href="/docs/workflows.md">Workflow guide</a><a id="workflow-github" href="https://github.com/inteleq/mix-with-ai" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
+  </header>
+  <main class="wrap workflow-page">
+    <section class="workflow-hero" aria-labelledby="workflow-heading">
+      <div><p class="eyebrow">AN IDEA. A FEW CHOICES. YOUR NEXT TRACK.</p><h1 id="workflow-heading">Make music.<br><span>Make it yours.</span></h1><p>Choose a workflow, shape its character, and hear a direction worth taking into your session.</p></div>
+      <aside class="workflow-preview-note"><span id="workflow-mode" class="mode-badge">Connecting…</span><h2>Start with a listen.</h2><p id="preview-explanation">This public example includes a local listening preview. Live account and Desktop integration are being qualified.</p><a href="#workflow-cards" class="button button-dark">Choose a workflow</a></aside>
+    </section>
+    <p id="workflow-status" class="workflow-status" role="status" aria-live="polite">Checking the local example…</p>
+    <div id="workflow-error" class="workflow-error" role="alert" hidden></div>
+    <section id="ready" class="workflow-panel" aria-labelledby="ready-heading">
+      <div class="workflow-section-heading"><div><p class="eyebrow">01 / READY TO MAKE MUSIC?</p><h2 id="ready-heading">Know the next step.</h2></div><button id="refresh-readiness" class="button button-outline" type="button" disabled>Check setup again</button></div>
+      <ol id="setup-checks" class="workflow-checks"></ol>
+      <div class="workflow-actions"><a id="desktop-download" class="button button-outline" href="https://mixwithai.com/download" target="_blank" rel="noopener noreferrer">Get MWA Desktop ↗</a><a id="mwa-account" class="button button-outline" href="https://mixwithai.com" target="_blank" rel="noopener noreferrer">Open my MWA account ↗</a></div>
+      <p class="workflow-help">The download opens the existing MWA product page. This public example is not an installer, and signing into MWA does not authenticate this example. No account, balance or Desktop connection is assumed.</p>
+    </section>
+    <section aria-labelledby="choose-heading">
+      <div class="workflow-section-heading"><div><p class="eyebrow">02 / CHOOSE YOUR WORKFLOW</p><h2 id="choose-heading">A useful place to start.</h2></div><span class="workflow-help">Full tracks, with a clear next step.</span></div>
+      <div id="workflow-cards" class="workflow-cards"></div>
+    </section>
+    <section id="lesson-context" class="workflow-panel" aria-labelledby="lesson-heading" hidden><p class="eyebrow">TEACHER LESSON</p><h2 id="lesson-heading"></h2><p id="lesson-attribution"></p><p id="lesson-objective"></p><p class="workflow-help">Attribution is supplied by the link author and is not verified. Opening this lesson only loads preferences. It cannot grant trial credits, run music generation or change Ableton.</p><button id="clear-lesson" class="button button-outline" type="button">Leave this lesson</button></section>
+    <section id="customise" class="workflow-panel" aria-labelledby="customise-heading">
+      <div class="workflow-section-heading"><div><p class="eyebrow">03 / MAKE THIS WORKFLOW MINE</p><h2 id="customise-heading">Your taste. Your starting point.</h2></div></div>
+      <div class="workflow-editor-grid">
+        <form id="workflow-form">
+          <label for="workflow-name">My workflow name</label><input id="workflow-name" maxlength="120" required>
+          <div id="generation-preferences"><label for="workflow-genre">Genre</label><select id="workflow-genre"></select><label for="workflow-prompt">Describe the direction</label><textarea id="workflow-prompt" rows="5" maxlength="1500" required aria-describedby="workflow-limits"></textarea><p id="workflow-limits" class="workflow-help">The live profile makes a 180-second track at 128 BPM. Preview uses a 15-second synthesized loop and does not follow your prompt.</p></div>
+          <div id="parent-choice" hidden><label for="workflow-parent">Ready original in this session</label><select id="workflow-parent"><option value="">Make an idea first</option></select></div>
+          <p id="workflow-cost" class="workflow-cost">Checking cost…</p>
+          <label id="run-consent-label" class="workflow-check"><input id="run-consent" type="checkbox">I understand this runs a local listening preview, not AI music generation.</label>
+          <div class="workflow-actions"><button id="run-workflow" class="button button-dark" type="submit" disabled>Run listening preview</button><button id="developer-handoff" class="button button-outline" type="button" hidden>Review in developer playground ↗</button></div>
+          <p id="run-gate" class="workflow-help"></p>
+        </form>
+        <aside class="workflow-example"><p class="eyebrow">HEAR THE STARTING POINT</p><h3 id="example-title">Loading example…</h3><p id="example-note" class="workflow-help"></p><audio id="example-audio" controls preload="none" aria-label="Workflow example audio"></audio><p id="example-credit" class="workflow-help"></p><p class="workflow-help">A listening example illustrates a direction; it does not guarantee your generated result.</p><a href="/docs/workflows.md">What each workflow produces ↗</a></aside>
+      </div>
+      <details class="workflow-details"><summary>Keep my preferences</summary><p class="workflow-help">Saved on this browser only, with your prompt. Do not include secrets or confidential text. Export to keep a copy; no cloud sync.</p><div class="workflow-actions"><button id="save-workflow" class="button button-outline" type="button">Save my workflow</button><button id="export-workflow" class="button button-outline" type="button">Export template JSON</button></div><label for="saved-workflows">My saved workflows</label><select id="saved-workflows"><option value="">No saved workflows</option></select><div class="workflow-actions"><button id="load-workflow" class="button button-outline" type="button">Load selected</button><button id="delete-workflow" class="button button-outline" type="button">Delete selected</button></div><label for="workflow-file">Import a template or lesson JSON</label><input id="workflow-file" type="file" accept=".json,application/json"></details>
+    </section>
+    <section id="listen" class="workflow-panel" aria-labelledby="listen-heading">
+      <div class="workflow-section-heading"><div><p class="eyebrow">04 / LISTEN → COMPARE → CHOOSE</p><h2 id="listen-heading">Take a direction further.</h2></div><span id="result-source" class="mode-badge">NO RESULT YET</span></div>
+      <label for="workflow-results">Results in this local session</label><select id="workflow-results"><option value="">Run a listening preview to begin</option></select>
+      <h3 id="result-title">Your next idea belongs here.</h3><p id="result-note" class="workflow-help">Results load only after you choose a workflow or select a saved session result.</p>
+      <progress id="workflow-progress" max="1" value="0" aria-label="Workflow progress" hidden></progress><audio id="result-audio" controls preload="none" aria-label="Selected result audio" hidden></audio>
+      <div class="workflow-actions"><button id="cancel-workflow" class="button button-outline" type="button" hidden>Cancel current run</button><button id="refresh-result" class="button button-outline" type="button" disabled>Refresh result</button><button id="retry-workflow" class="button button-outline" type="button" hidden>Recover the same request</button><button id="use-variation" class="button button-outline" type="button" disabled>Make a variation</button><a id="result-studio" class="button button-outline" target="_blank" rel="noopener noreferrer" hidden>Open in MWA ↗</a><a id="result-download" class="button button-outline" target="_blank" rel="noopener noreferrer" hidden>Download audio ↗</a></div>
+      <div id="workflow-comparison" class="workflow-comparison" hidden><h3>Original / variation</h3><div class="workflow-actions"><button id="compare-original" class="button button-outline" type="button" aria-pressed="false">Listen to original</button><button id="compare-variation" class="button button-outline" type="button" aria-pressed="false">Listen to variation</button></div><audio id="workflow-compare-audio" controls preload="none" aria-label="Original and variation comparison"></audio><p id="workflow-compare-note" class="workflow-help">Switch versions at the same listening position.</p></div>
+    </section>
+    <section id="ableton-import" class="workflow-panel" aria-labelledby="import-heading">
+      <p class="eyebrow">05 / REVIEW → ABLETON</p><h2 id="import-heading">Bring the audio into your session.</h2><p class="workflow-help">Choose a ready live result, inspect a saved and stopped Live Set, prepare the full-audio preview, and approve it once. Preview audio cannot be imported. A dedicated empty audio track is required; existing music and Set tempo stay unchanged.</p><p id="import-enable-note" class="workflow-help"></p>
+      <p id="ableton-import-status" class="workflow-status" role="status" aria-live="polite">No audio import requested.</p><button id="inspect-import-targets" class="button button-outline" type="button" disabled>Check Ableton and empty tracks</button><p id="import-set" class="workflow-help">No saved Set inspected.</p>
+      <div class="workflow-two-fields"><div><label for="import-track">Dedicated empty audio track</label><select id="import-track" disabled></select></div><div><label for="import-position">Placement / beats from start</label><input id="import-position" type="number" min="0" max="1000000" step="0.01" value="0" required disabled></div></div>
+      <button id="prepare-audio-import" class="button button-dark" type="button" disabled>Prepare audio and target preview</button><div id="audio-import-preview" hidden><pre id="audio-import-details" tabindex="0" aria-label="Reviewed audio import details"></pre><label class="workflow-check"><input id="confirm-audio-import" type="checkbox" disabled>I reviewed the saved Set, empty track and placement. Import this full audio result once.</label><button id="apply-audio-import" class="button button-dark" type="button" disabled>Approve audio import</button></div>
+      <div class="workflow-actions"><button id="refresh-audio-import" class="button button-outline" type="button" disabled>Check import status</button><button id="clear-import-notice" class="button button-outline" type="button" hidden>I inspected Live; clear pending notice</button></div><a href="/docs/ableton-audio-import.md">Developer adapter setup and qualification limits ↗</a>
+    </section>
+    <section class="workflow-panel" aria-labelledby="teacher-heading"><p class="eyebrow">FOR TEACHERS / A STARTING POINT TO SHARE</p><h2 id="teacher-heading">Teach a direction. Let them make it theirs.</h2><p class="workflow-help">Share a lesson and the currently selected preferences. Students review them before running anything. The link includes the prompt; anyone with the link can read it. Links work on the same hosted preview, or each student's running local kit.</p><form id="lesson-form"><div class="workflow-two-fields"><div><label for="lesson-title">Lesson title</label><input id="lesson-title" maxlength="120" required></div><div><label for="lesson-teacher">Teacher attribution</label><input id="lesson-teacher" maxlength="120" required></div></div><label for="lesson-goal">What should the student explore?</label><textarea id="lesson-goal" rows="2" maxlength="500" required></textarea><label class="workflow-check"><input id="lesson-consent" type="checkbox" required>I reviewed the lesson and prompt and approve sharing them.</label><div class="workflow-actions"><button class="button button-outline" type="submit">Create lesson link</button><button id="export-lesson" class="button button-outline" type="button">Export lesson JSON</button></div></form><div id="lesson-share" hidden><label for="lesson-link">Lesson link</label><textarea id="lesson-link" rows="3" readonly></textarea><button id="copy-lesson" class="button button-outline" type="button">Copy lesson link</button></div><p class="workflow-help">No referral coupon or trial entitlement is encoded. Trial eligibility must be checked by MWA's server.</p></section>
+    <footer class="workflow-footer"><p>Public templates and API examples. MWA's Desktop implementation and generation systems stay private.</p><a href="/docs/workflows.md">Build a workflow with the public API ↗</a></footer>
+  </main>
+</body>
+</html>

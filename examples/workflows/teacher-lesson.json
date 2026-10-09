@@ -1,0 +1,13 @@
+{
+  "schema_version": "mwa_workflow_lesson_v1",
+  "title": "Explore a warmer breakdown",
+  "teacher": "Example teacher — fictional attribution",
+  "objective": "Listen to the starting point, describe a warmer character, then compare two directions. This is a configuration example, not a real class or endorsement.",
+  "template": {
+    "schema_version": "mwa_workflow_template_v1",
+    "workflow": "create-idea",
+    "name": "My warmer direction",
+    "genre": "deep_house",
+    "prompt": "Warm deep house with a spacious breakdown, soft chords and a rounded bass groove. Instrumental."
+  }
+}

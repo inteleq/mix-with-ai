@@ -7,10 +7,18 @@ import { renderDemoAudio } from "./demo-audio.mjs";
 import { COMPARISON_DEMOS, readShowcase } from "./showcase.mjs";
 import { cleanProject, buildContextPrompt, PROJECT_LIMITS } from "../public/project-context.mjs";
 import { createAbletonImportRoutes } from "./ableton-imports.mjs";
+import { workflowReadiness, prepareWorkflow } from "./workflows.mjs";
 
 const root = new URL("../", import.meta.url);
 const files = new Map([
   ["/", ["public/index.html", "text/html; charset=utf-8"]],
+  ["/workflows", ["public/workflows.html", "text/html; charset=utf-8"]],
+  ["/workflows.js", ["public/workflows.js", "text/javascript; charset=utf-8"]],
+  ["/workflows.css", ["public/workflows.css", "text/css; charset=utf-8"]],
+  ["/workflow-templates.mjs", ["public/workflow-templates.mjs", "text/javascript; charset=utf-8"]],
+  ["/docs/workflows.md", ["docs/workflows.md", "text/plain; charset=utf-8"]],
+  ["/examples/workflows/create-idea.json", ["examples/workflows/create-idea.json", "application/json; charset=utf-8"]],
+  ["/examples/workflows/teacher-lesson.json", ["examples/workflows/teacher-lesson.json", "application/json; charset=utf-8"]],
   ["/project", ["public/project.html", "text/html; charset=utf-8"]],
   ["/project.js", ["public/project.js", "text/javascript; charset=utf-8"]],
   ["/ableton-import.js", ["public/ableton-import.js", "text/javascript; charset=utf-8"]],
@@ -158,7 +166,7 @@ export function createStarterServer(config, { service, now = Date.now, showcase 
         if (!session) {
           if (sessions.size >= MAX_SESSIONS) throw httpError(503, "Preview is busy. Please try again later.");
           const id = randomBytes(24).toString("hex");
-          session = { csrf: randomBytes(24).toString("hex"), touched: now(), jobs: new Map(), requests: new Map(), submissions: [], handoffs: new Map() };
+          session = { csrf: randomBytes(24).toString("hex"), touched: now(), jobs: new Map(), requests: new Map(), submissions: [], handoffs: new Map(), workflowHandoffs: new Map() };
           sessions.set(id, session);
           res.setHeader("Set-Cookie", `mwa_starter=${id}; HttpOnly; SameSite=Strict; Path=/; Max-Age=86400${config.publicOrigin ? "; Secure" : ""}`);
         }
@@ -174,6 +182,28 @@ export function createStarterServer(config, { service, now = Date.now, showcase 
       if (!session) throw httpError(401, "This local session expired. Reload the page to begin again.");
       session.touched = now();
       if (!path.startsWith("/api/demo-audio/") && req.headers["x-starter-csrf"] !== session.csrf) throw httpError(403, "Reload the page and retry.");
+
+      if (path === "/api/workflows/readiness" && req.method === "GET") {
+        json(res, 200, workflowReadiness(config, { audioImportAvailable: Boolean(audioImporter) })); return;
+      }
+      if (["/api/workflows/prepare", "/api/workflows/handoff"].includes(path) && req.method === "POST") {
+        let prepared;
+        try { prepared = prepareWorkflow(await readJson(req), session.jobs); }
+        catch (failure) { if (failure.status) throw failure; throw httpError(400, failure.message); }
+        if (path.endsWith("/prepare")) {
+          json(res, 200, { input: prepared.input, ...workflowReadiness(config).generation }); return;
+        }
+        const id = randomUUID();
+        if (session.workflowHandoffs.size >= 10) session.workflowHandoffs.delete(session.workflowHandoffs.keys().next().value);
+        session.workflowHandoffs.set(id, prepared.input);
+        json(res, 200, { id, url: `/?workflow=${id}#studio`, message: "Review this request in the developer playground. No generation was submitted." }); return;
+      }
+      const workflowHandoff = path.match(/^\/api\/workflows\/handoff\/([a-f0-9-]+)$/i);
+      if (workflowHandoff && req.method === "GET") {
+        const input = session.workflowHandoffs.get(workflowHandoff[1]);
+        if (!input) throw httpError(404, "Workflow handoff is not in this local session.");
+        json(res, 200, { input }); return;
+      }
 
       if (path.startsWith("/api/ableton/")) { await importRoutes(path, req, res, session); return; }
 
@@ -211,8 +241,13 @@ export function createStarterServer(config, { service, now = Date.now, showcase 
         json(res, 200, handoff); return;
       }
 
-      if (path === "/api/generations" && req.method === "POST") {
-        const body = await readJson(req);
+      if (["/api/generations", "/api/workflows/run"].includes(path) && req.method === "POST") {
+        let body = await readJson(req);
+        if (path === "/api/workflows/run") {
+          if (config.mode !== "demo") throw httpError(409, "Guided live runs need verified account access and an authoritative price quote. No generation was submitted.");
+          try { body = prepareWorkflow(body, session.jobs).input; }
+          catch (failure) { throw httpError(400, failure.message); }
+        }
         let normalized;
         try { normalized = createRequest(body); } catch (error) { throw httpError(400, error.message); }
         if (body.revision && !session.jobs.has(body.revision.parent_generation_id)) throw httpError(404, "Parent generation is not in this session.");
@@ -234,7 +269,7 @@ export function createStarterServer(config, { service, now = Date.now, showcase 
           record.promise = music.generate(record.input, { idempotencyKey: key })
             .then(job => {
               record.result = job;
-              session.jobs.set(job.generation_id, { input: record.input, status: job.status });
+              session.jobs.set(job.generation_id, { input: record.input, status: job.status, audioReady: job.audio_export?.status === "ready" });
               return job;
             })
             .finally(() => { inFlightSubmissions--; record.promise = null; });
@@ -260,6 +295,7 @@ export function createStarterServer(config, { service, now = Date.now, showcase 
           job = await music.retryExport(id, { idempotencyKey: key });
         } else throw httpError(405, "Method not allowed.");
         owned.status = job.status;
+        owned.audioReady = job.audio_export?.status === "ready";
         json(res, 200, present(job, config.mode, owned.input)); return;
       }
 

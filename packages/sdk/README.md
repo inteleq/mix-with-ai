@@ -1,5 +1,11 @@
 # MWA music client
 
+Ready-made workflow templates and teacher lessons are companion examples in the
+[public kit](https://github.com/inteleq/mix-with-ai), documented in `docs/workflows.md`.
+They call the same generation/revision
+methods; no private Desktop modules or generation logic are added to this SDK.
+The guided preview and optional local Ableton adapter are separate from the SDK.
+
 A small, independently written server-side JavaScript client for the public MWA API. Includes TypeScript declarations, uses Node.js 22.16+, and has no runtime dependencies. The client is MIT licensed; hosted music generation needs approved API access and prepaid API credits.
 
 ## Install and create music

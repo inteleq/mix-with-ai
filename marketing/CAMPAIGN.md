@@ -8,6 +8,32 @@ A working starting point for music applications powered by the MWA API. The open
 
 Primary audience: developers building music creation tools, creator workflows, audio experiments, and interfaces for comparing generated tracks. The first release targets the supported electronic music profile.
 
+## Musician workflow preview
+
+Give musicians a separate entry at **`/workflows`**: choose an idea, customise
+preferences, listen and compare. Keep the developer playground/SDK as the path
+for people building new workflows. Reuse the existing private MWA Desktop for the
+eventual installed experience; this public release does not create a new installer.
+
+Current preview copy:
+
+> Choose a ready-made music workflow and make it yours. Explore a listening
+> preview, save your preferences and share a teacher lesson. Developers can use
+> the same public templates with the MWA API. The preview audio is synthesized,
+> not generated from your prompt. [Workflow preview] · [Public repository]
+
+Only use a real hosted `/workflows` URL after hosting is verified. Until real
+account access, authoritative pricing and the private Desktop/Live connection
+pass acceptance, do not advertise this as an installed, signed-in, paid workflow
+product. Approved showcase examples are still awaiting publication.
+
+For the later musician campaign, demonstrate one qualified real journey:
+install → sign in → customise → review cost → generate → listen → approve full
+audio import. Run the [five-musician pilot](../docs/workflows.md#five-musician-pilot)
+first. Four independent completions is the proposed gate; record actual time,
+failures and charged credits. Stars measure awareness; successful real workflows
+and repeat API use measure activation and retention.
+
 ## Launch post
 
 > We built MWA Music Starter: an open-source starting point for your next music app.

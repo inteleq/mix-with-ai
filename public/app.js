@@ -462,6 +462,20 @@ try {
       $("mode-explanation").textContent = "Reviewed project summary loaded. Choose a genre, review the prompt, then explicitly generate. This creates a new 180-second track at 128 BPM; it does not import or edit your source project.";
     } catch (error) { showError(error.message); }
   }
+  const workflowId = new URL(location.href).searchParams.get("workflow");
+  if (workflowId && !pending) {
+    try {
+      const handoff = await api(`/api/workflows/handoff/${encodeURIComponent(workflowId)}`);
+      fill(handoff.input);
+      revision = handoff.input.revision;
+      if (revision) {
+        $("revision-text").textContent = "Reviewed workflow variation loaded. Confirm the parent and prompt before generating.";
+        $("revision-notice").hidden = false;
+      }
+      updateCodeExamples();
+      $("mode-explanation").textContent = "Workflow preferences loaded; no request was submitted. This is the developer playground. Live runs use API credits; check pricing and balance in your MWA API account before explicitly generating.";
+    } catch (error) { showError(error.message); }
+  }
   updateButtons(); renderHistory();
   if (history.length && !pending) { currentInput = history[0]; watch(history[0].id); }
 } catch (error) { $("mode-badge").textContent = "CONNECTION UNAVAILABLE"; showError(error.message); }

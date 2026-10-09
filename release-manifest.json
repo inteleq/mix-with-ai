@@ -90,6 +90,17 @@
     "server/ableton-imports.mjs",
     "public/ableton-import.js",
     "docs/ableton-audio-import.md",
-    "tests/ableton-import.test.mjs"
+    "tests/ableton-import.test.mjs",
+    "public/workflows.html",
+    "public/workflows.js",
+    "public/workflows.css",
+    "public/workflow-templates.mjs",
+    "server/workflows.mjs",
+    "docs/workflows.md",
+    "examples/workflows/create-idea.json",
+    "examples/workflows/teacher-lesson.json",
+    "examples/workflows/prepare.mjs",
+    "tests/workflows.test.mjs",
+    "tests/workflow-ui.test.mjs"
   ]
 }

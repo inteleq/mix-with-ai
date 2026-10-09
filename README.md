@@ -8,8 +8,17 @@ Describe a track, follow its progress, play the result, and build your own exper
 
 [Get an API key](https://mixwithai.com/settings/api?utm_source=github&utm_medium=readme&utm_campaign=music-starter) · [API guide](docs/api.md) · [Build something](docs/build-with-mwa.md) · [SDK](packages/sdk/README.md)
 
+**Prefer a guided starting point?** Open **`/workflows`** on the running kit: choose
+an idea, personalise a public template, hear a labeled preview, compare a variation
+and share a teacher lesson. [Workflow guide and examples](docs/workflows.md).
+The public kit is a browser example, not a new Desktop installer. Guided live runs
+are blocked until account access, server pricing and the private Desktop connection
+are qualified; existing developer API examples remain available.
+
 <!-- repository-links:start -->
-If this helps you build something, star the repository and share your project in an issue. Stars help other music developers find it.
+[Star on GitHub](https://github.com/inteleq/mix-with-ai) · [Fork the starter](https://github.com/inteleq/mix-with-ai/fork) · [Share what you built](https://github.com/inteleq/mix-with-ai/issues/new?template=showcase.yml)
+
+If this helps you build something, a star helps other music developers find it.
 <!-- repository-links:end -->
 
 ## Try it in one command
@@ -40,6 +49,7 @@ This starter targets the public **MWA EDM v1** profile: three-minute electronic 
 
 - **Music playground:** prompts, genre choices, progress, playback, downloads, and session history.
 - **Revision workflow:** request a variation or remix of a generation from the current session.
+- **Musician workflow front door:** three cards, truthful setup states, browser-saved preferences, template export/import, non-executing teacher links and the existing reviewed full-audio import interface. Preview works now; Desktop sign-in, live quotes and bridge qualification remain private integration work.
 - **A/B listening room:** compare ready originals and variations with one player, preserved time position, and two labeled fixtures that run without a key. [Comparison recipe](docs/comparison.md).
 - **Interactive code explorer:** JavaScript, Python, cURL, and request JSON follow the prompt, genre, title, and selected revision. Copying or editing examples makes no API request.
 - **Curated showcase:** publish only approved public audio URLs, credits, and optional prompts through `showcase.json`. The initial list is empty while campaign tracks are being selected. [Showcase guide](docs/showcase.md).

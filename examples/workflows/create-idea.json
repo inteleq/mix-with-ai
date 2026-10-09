@@ -1,0 +1,7 @@
+{
+  "schema_version": "mwa_workflow_template_v1",
+  "workflow": "create-idea",
+  "name": "My sunset idea",
+  "genre": "deep_house",
+  "prompt": "Warm deep house with soft chords, a rounded groove and an airy breakdown. Instrumental."
+}
